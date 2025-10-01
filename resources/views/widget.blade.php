@@ -66,7 +66,7 @@
         <div class="alert">{{ session('success') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('widget.send') }}">
+    <form method="POST" action="{{ route('widget.send') }}" enctype="multipart/form-data" novalidate>
         @csrf
         <div class="form-group">
             <label>Имя</label>
@@ -96,6 +96,12 @@
             <label>Сообщение</label>
             <textarea name="text" rows="4">{{ old('text') }}</textarea>
             @error('text') <small style="color:red">{{ $message }}</small> @enderror
+        </div>
+
+        <div class="form-group">
+            <label>Прикрепить файл</label>
+            <input type="file" name="attachment">
+            @error('attachment') <small style="color:red">{{ $message }}</small> @enderror
         </div>
 
         <button type="submit">Отправить</button>
