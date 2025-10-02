@@ -66,8 +66,9 @@
         <div class="alert">{{ session('success') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('widget.send') }}" enctype="multipart/form-data" novalidate>
+    <form method="POST" action="{{url('/api/tickets')}}" enctype="multipart/form-data"  id="addtickets">
         @csrf
+        <div class="content"></div>
         <div class="form-group">
             <label>Имя</label>
             <input type="text" name="name" value="{{ old('name') }}">
@@ -109,3 +110,38 @@
 </div>
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function()
+        {
+            
+           $('#addtickets').on('submit', function(event)        
+            {
+
+                event.preventDefault();
+
+                jQuery.ajax({
+
+                    url:"{{url('/api/tickets')}}",
+                    context: $(".content"),
+                    data:jQuery('#addtickets').serialize(),
+                    type:'post',
+                    
+                    success:function(result)
+                    {
+                        $(".content").text("Сообщение было доставленно успешно. Мы будем работать над Вашей проблемой.");
+                        jQuery('#addtickets')[0].reset();
+                    }
+
+                })
+
+            });
+
+        }); 
+
+</script>
+
+
