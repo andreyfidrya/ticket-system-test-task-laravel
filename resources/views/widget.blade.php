@@ -133,8 +133,16 @@
                         $('#addtickets')[0].reset();
                     },
                     error: function(xhr) {
-                        console.log(xhr.responseText);
-                        $(".content").text("Ошибка: " + xhr.status + " " + xhr.statusText);
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            let messages = [];
+                            for (let field in errors) {
+                                messages.push(errors[field][0]);
+                            }
+                            $(".content").html('<span style="color:red">' + messages.join('<br>') + '</span>');
+                        } else {
+                            $(".content").text("Ошибка: " + xhr.status + " " + xhr.statusText);
+                        }
                     }
                 });
             });
