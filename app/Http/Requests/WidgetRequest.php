@@ -24,7 +24,7 @@ class WidgetRequest extends FormRequest
                 'regex:/^\+?[1-9]\d{1,14}$/' // формат E.164
             ],
             'text' => 'required|string|max:500',
-            'attachment' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,pdf,doc,docx,txt',
+            'attachment' => 'nullable|file|max:10240',
         ];
     }
 

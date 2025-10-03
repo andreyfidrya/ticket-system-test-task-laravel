@@ -9,8 +9,7 @@
             font-family: sans-serif;
             background: #f9f9f9;
             margin: 0;
-            padding: 10px;
-        }
+            padding: 10px;        }
         .widget-container {
             max-width: 350px;
             margin: auto;
@@ -118,26 +117,26 @@
     $(document).ready(function()
         {
             
-           $('#addtickets').on('submit', function(event)        
-            {
-
+           $('#addtickets').on('submit', function(event) {
                 event.preventDefault();
 
-                jQuery.ajax({
+                let formData = new FormData(this);
 
-                    url:"{{url('/api/tickets')}}",
-                    context: $(".content"),
-                    data:jQuery('#addtickets').serialize(),
-                    type:'post',
-                    
-                    success:function(result)
-                    {
-                        $(".content").text("Сообщение было доставленно успешно. Мы будем работать над Вашей проблемой.");
-                        jQuery('#addtickets')[0].reset();
+                $.ajax({
+                    url: "{{ url('/api/tickets') }}",
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,   // обязательно
+                    processData: false,   // обязательно
+                    success: function(result) {
+                        $(".content").text("Сообщение было доставлено успешно. Мы будем работать над Вашей проблемой.");
+                        $('#addtickets')[0].reset();
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                        $(".content").text("Ошибка: " + xhr.status + " " + xhr.statusText);
                     }
-
-                })
-
+                });
             });
 
         }); 
