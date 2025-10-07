@@ -81,15 +81,14 @@
 
 						<div class="dropdown-menu">
 							<ul class="list-unstyled mb-2">
-								<li class="divider"></li>
+								<li class="divider"></li>								
 								<li>
-									<a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="bx bx-user-circle"></i> My Profile</a>
-								</li>
-								<li>
-									<a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="bx bx-lock"></i> Lock Screen</a>
-								</li>
-								<li>
-									<a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="bx bx-power-off"></i> Logout</a>
+									<a role="menuitem" tabindex="-1" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+										<i class="bx bx-power-off"></i> Logout
+									</a>
+									<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										@csrf
+									</form>
 								</li>
 							</ul>
 						</div>
@@ -149,6 +148,27 @@
 					<header class="page-header">
 						<h2>{{$header}}</h2>						
 					</header>
+
+					<!-- start: page -->
+					<div class="row">
+						<div class="col col-12 col-md-10">						
+						@if($errors->any())
+            			<div class="alert alert-danger">
+						<ul>
+							@foreach($errors->all() as $error)
+								<li>{{$error}}</li>
+							@endforeach
+						</ul>
+            			</div>
+        				@endif
+
+						<main>
+                    		{{ $slot }}
+                		</main>							
+						
+						</div>
+					</div>
+					<!-- end: page -->
 					
 				</section>
 			</div>
