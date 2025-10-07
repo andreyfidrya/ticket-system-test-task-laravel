@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WidgetController;
+use App\Http\Controllers\Api\TicketController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -19,3 +20,8 @@ Route::post('/logout', function () {
 Auth::routes();
 
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])
+        ->name('tickets.updateStatus');
+});

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\WidgetRequest;
 use App\Models\Customer;
 use App\Models\Ticket;
@@ -61,4 +62,24 @@ class TicketController extends Controller
             'message' => 'Тикет создан успешно',
         ]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|in:новый,в работе,обработан',
+        ]);
+
+        $ticket->status = $request->status;
+        
+        if ($request->status === 'обработан' || $request->status === 'в работе') {
+            $ticket->response_date = now();
+        }
+
+        $ticket->save();
+        
+        return back()->with('success', 'Статус обновлён!');
+    }
+
 }

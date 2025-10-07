@@ -115,9 +115,9 @@
 
 				                <ul class="nav nav-main">
 				                    <li>
-				                        <a class="nav-link" href="layouts-default.html">
+				                        <a class="nav-link" href="{{ route('admin.index') }}">
 				                            <i class="bx bx-home-alt" aria-hidden="true"></i>
-				                            <span>Заявки</span>
+				                            <span>Tickets</span>
 				                        </a>                        
 				                    </li>                
 				                </ul>

@@ -1,4 +1,4 @@
-<x-layouts.porto title="Заявки" header="Заявки" username={{$username}}>
+<x-layouts.porto title="Tickets" header="Tickets" username={{$username}}>    
     <table class="table">
         <thead>
             <tr>
@@ -31,10 +31,10 @@
                     @endforeach
                 </td>
                 <td>
-                    <form action="#" method="POST">
+                    <form action="{{ route('tickets.updateStatus', $ticket->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <select name="status" class="form-select" onchange="this.form.submit()">
+                        <select name="status" class="form-select" style="width: 140px;" onchange="this.form.submit()">
                             <option value="новый" {{ $ticket->status == 'новый' ? 'selected' : '' }}>Новый</option>
                             <option value="в работе" {{ $ticket->status == 'в работе' ? 'selected' : '' }}>В работе</option>
                             <option value="обработан" {{ $ticket->status == 'обработан' ? 'selected' : '' }}>Обработан</option>
