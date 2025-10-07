@@ -51,9 +51,9 @@ class TicketController extends Controller
         ]);
 
         if ($request->hasFile('attachment')) {
-            $ticket
-                ->addMedia($request->file('attachment'))
-                ->toMediaCollection('attachments');
+            $ticket->addMedia($request->file('attachment'))
+            ->usingFileName($request->file('attachment')->getClientOriginalName())
+            ->toMediaCollection('attachments');
         }
 
         return response()->json([
