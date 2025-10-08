@@ -27,4 +27,4 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         ->name('tickets.updateStatus');
 });
 
-// Route::get('/admin/tickets', [AdminController::class, 'index'])->name('admin.tickets');
+
