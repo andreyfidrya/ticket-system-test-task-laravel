@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Ticket;
 
 class WidgetRequest extends FormRequest
 {
@@ -41,5 +42,25 @@ class WidgetRequest extends FormRequest
             'text.required' => 'Введите сообщение',
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $email = $this->input('email');
+            $phone = $this->input('phone');
+            
+            $recentTicket = Ticket::whereHas('customer', function ($query) use ($email, $phone) {
+            $query->where('email', $email)
+                ->orWhere('phone', $phone);
+            })
+            ->where('created_at', '>=', now()->subDay())
+            ->first();
+
+            if ($recentTicket) {
+                $validator->errors()->add('email', 'Вы уже отправляли заявку за последние 24 часа.');
+            }
+        });
+    }
+
 }
 
