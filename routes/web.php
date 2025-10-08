@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\Api\TicketController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,3 +26,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])
         ->name('tickets.updateStatus');
 });
+
+// Route::get('/admin/tickets', [AdminController::class, 'index'])->name('admin.tickets');

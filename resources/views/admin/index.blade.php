@@ -1,4 +1,42 @@
 <x-layouts.porto title="Tickets" header="Tickets" username={{$username}}>    
+    
+    <form method="GET" action="{{ route('admin.index') }}" class="mb-4 d-flex flex-wrap align-items-end gap-3">
+        <div>
+            <label for="email" class="form-label">Email:</label>
+            <input type="text" name="email" id="email" value="{{ request('email') }}" class="form-control" placeholder="Введите email">
+        </div>
+
+        <div>
+            <label for="phone" class="form-label">Телефон:</label>
+            <input type="text" name="phone" id="phone" value="{{ request('phone') }}" class="form-control" placeholder="Введите телефон">
+        </div>
+
+        <div>
+            <label for="status" class="form-label">Статус:</label>
+            <select name="status" id="status" class="form-select">
+                <option value="">Все</option>
+                <option value="новый" {{ request('status') == 'новый' ? 'selected' : '' }}>Новый</option>
+                <option value="в работе" {{ request('status') == 'в работе' ? 'selected' : '' }}>В работе</option>
+                <option value="обработан" {{ request('status') == 'обработан' ? 'selected' : '' }}>Обработан</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label">Дата с:</label>
+            <input type="date" name="date_from" value="{{ request('date_from') }}" class="form-control">
+        </div>
+
+        <div>
+            <label class="form-label">Дата по:</label>
+            <input type="date" name="date_to" value="{{ request('date_to') }}" class="form-control">
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
+            <a href="{{ route('admin.index') }}" class="btn btn-secondary">Сброс</a>
+        </div>
+    </form>
+    
     <table class="table">
         <thead>
             <tr>
