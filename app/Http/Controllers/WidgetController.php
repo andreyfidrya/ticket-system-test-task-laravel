@@ -9,7 +9,14 @@ class WidgetController extends Controller
 {
     public function index()
     {
-        return view('widget');
+        $response = response()->view('widget');
+
+        $response->headers->remove('X-Frame-Options');
+        $response->headers->set('X-Frame-Options', 'ALLOWALL');
+
+        $response->headers->set('Content-Security-Policy', "frame-ancestors *");
+
+        return $response;
     }
 
     public function send(WidgetRequest $request)
